@@ -2,7 +2,10 @@
 
 namespace App\Orchid\Screens\Advertise;
 
+use App\Models\Advertise;
+use App\Orchid\Layouts\Advertise\AdvertiseListLayout;
 use Orchid\Screen\Screen;
+use Orchid\Screen\Actions\Button;
 
 class AdvertiseListScreen extends Screen
 {
@@ -13,7 +16,9 @@ class AdvertiseListScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'advertises' => Advertise::all(),
+        ];
     }
 
     /**
@@ -23,7 +28,7 @@ class AdvertiseListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'AdvertiseListScreen';
+        return 'All Advertises';
     }
 
     /**
@@ -33,7 +38,11 @@ class AdvertiseListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Button::make('Add Advertise')
+                ->icon('plus')
+                ->method('addAdvertise'),
+        ];
     }
 
     /**
@@ -43,6 +52,12 @@ class AdvertiseListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            AdvertiseListLayout::class,
+        ];
+    }
+    public function addAdvertise()
+    {
+        return redirect()->route('platform.advertises.edit');
     }
 }

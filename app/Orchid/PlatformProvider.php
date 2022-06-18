@@ -82,9 +82,34 @@ class PlatformProvider extends OrchidServiceProvider
             //     ->badge(function () {
             //         return Dashboard::version();
             //     }, Color::DARK()),
+
+
+
             Menu::make('Article')
-                ->icon('monitor')
+                ->icon('code')
                 ->route('platform.articles.list'),
+            Menu::make('Achievement')
+                ->icon('grid')
+                ->route('platform.achievements.list'),
+            Menu::make('Advertise')
+                ->icon('monitor')
+                ->route('platform.advertises.list'),
+            Menu::make('Comment')
+                ->icon('note')
+                ->route('platform.comments.list'),
+            Menu::make('Tag')
+                ->icon('docs')
+                ->route('platform.tags.list'),
+            Menu::make('Category')
+                ->icon('briefcase')
+                ->route('platform.categories.list'),
+            Menu::make('Contact')
+                ->icon('layers')
+                ->route('platform.contacts.list'),
+
+
+
+
             Menu::make(__('Users'))
                 ->icon('user')
                 ->route('platform.systems.users')

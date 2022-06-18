@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
+
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    //
-    public function index()
-    {
 
-        return view('categories.index');
-    }
-    public function show($id)
+    public function store(CommentRequest $request)
     {
-        return view('categories.show');
+        Comment::create($request->validated());
+        // dd($request->validated());
+        return redirect()->back()->with('status', 'You commented Successfully');
     }
 }

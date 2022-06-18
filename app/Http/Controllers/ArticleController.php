@@ -2,43 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
+use App\Models\Comment;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    //
-    public function index()
-    {
-        return view('articles.index');
-    }
 
-    public function create()
+    public function show(Article $article)
     {
-        return view('articles.create');
-    }
+        $tags = Tag::all();
+        $comments = $article->comments()->with('user')->get();
 
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        return view('articles.show');
-    }
-
-    public function edit($id)
-    {
-        return view('articles.edit');
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+        return view('articles.show', compact('article', 'tags', 'comments'));
     }
 }

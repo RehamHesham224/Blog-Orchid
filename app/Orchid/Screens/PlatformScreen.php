@@ -48,16 +48,16 @@ class PlatformScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make('Website')
-                ->href('http://orchid.software')
-                ->icon('globe-alt'),
+            Link::make('Twitter')
+                ->href('https://twitter.com/Reham50462483')
+                ->icon('social-twitter'),
 
-            Link::make('Documentation')
-                ->href('https://orchid.software/en/docs')
-                ->icon('docs'),
+            Link::make('Facebook')
+                ->href('https://www.facebook.com/reham224')
+                ->icon('social-facebook'),
 
             Link::make('GitHub')
-                ->href('https://github.com/orchidsoftware/platform')
+                ->href('https://github.com/RehamHesham224')
                 ->icon('social-github'),
         ];
     }

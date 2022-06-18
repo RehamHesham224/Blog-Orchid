@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Achievement;
+use App\Models\Article;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -11,12 +14,9 @@ class AboutController extends Controller
     //
     public function index()
     {
-        return view('about.index');
-    }
-    public function search($search)
-    {
-        $users = User::search($search)->get();
-        return $users;
-        // return view('search', compact('_user_'));
+        $tags = Tag::all();
+        $popular_articles = Article::where('popular', '=', 1)->get();
+        $achievements = Achievement::Paginate(3);
+        return view('about.index', compact('tags', 'popular_articles', 'achievements'));
     }
 }

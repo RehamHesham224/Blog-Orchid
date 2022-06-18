@@ -2,8 +2,9 @@
 
 namespace App\Orchid\Layouts\Article;
 
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Fields\Picture;
+
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -69,9 +70,15 @@ class ArticleListLayout extends Table
                         'link' => $article->image
                     ]);
                 }),
-
-
-
+            TD::make('Comments', 'Article Comments')
+                ->width('200')
+                ->sort()->filter(TD::FILTER_TEXT)
+                ->cantHide()
+                ->render(function ($article) {
+                    return Link::make('Show Comments')
+                        ->icon('text-middle')
+                        ->route('platform.comments.list', [$article->id]);
+                }),
 
         ];
     }

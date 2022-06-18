@@ -3,6 +3,9 @@
 namespace App\Orchid\Screens\Article;
 
 use App\Models\Article;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Tag;
 use App\Orchid\Layouts\Role\RoleEditLayout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -13,6 +16,7 @@ use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Cropper;
+use Orchid\Screen\Fields\CheckBox;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Fields\Picture;
@@ -23,19 +27,10 @@ use Orchid\Screen\TD;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
+use Orchid\Screen\Fields\Select;
 
 class ArticleEditScreen extends Screen
 {
-    /**
-     * Query data.
-     *
-     * @return array
-     */
-    public function query(): iterable
-    {
-        return [];
-    }
-
     /**
      * Display header name.
      *
@@ -45,10 +40,29 @@ class ArticleEditScreen extends Screen
     {
         return 'Add Article';
     }
+    /**
+     * @var bool
+     */
     public $exists = false;
-    protected $target = 'articles';
-    public $content = 'Creating a new Article';
-    public $name = 'Creating a new Artcle';
+    public $author = "Reham";
+    /**
+     * Query data.
+     *
+     * @return array
+     */
+
+    public function query(Article $article): iterable
+    {
+        $this->exists = $article->exists;
+        if ($this->exists) {
+            $this->name = 'Edit Article';
+            $this->author = $article->users->name ?? "Reham";
+        }
+
+        return [
+            'article' => $article,
+        ];
+    }
     /**
      * Button commands.
      *
@@ -99,11 +113,22 @@ class ArticleEditScreen extends Screen
                     ->required()
                     ->placeholder('article body')
                     ->help('Specify The article body.'),
+                CheckBox::make('article.popular')
+                    ->value(1)
+                    ->title('Popular')
+                    ->placeholder('Popular Article')
+                    ->help('Specify Popular Article'),
                 Relation::make('article.user_id')
                     ->title('Author')
                     ->fromModel(User::class, 'name'),
-
-
+                Relation::make('article.categories.')
+                    ->fromModel(Category::class, 'name')
+                    ->multiple()
+                    ->title('Related Categories'),
+                Relation::make('article.tags.')
+                    ->fromModel(Tag::class, 'title')
+                    ->multiple()
+                    ->title('Related Tags'),
                 Cropper::make('article.image')
                     ->targetId()
                     ->targetRelativeUrl()
@@ -111,7 +136,7 @@ class ArticleEditScreen extends Screen
                     ->width(400)
                     ->title('Image')
                     ->horizontal()
-                    ->help('Specify The Speaker avatar.'),
+                    ->help('Specify The Article avatar.'),
             ]),
 
         ];
@@ -121,11 +146,18 @@ class ArticleEditScreen extends Screen
         $request->validate([
             'article.name' => 'required|string',
             'article.body' => 'required|string',
-            'article.image' => 'nullable'
+            'article.popular' => 'nullable',
+            'article.image' => 'nullable',
+            'categories.' => 'nullable',
+            'comments.' => 'nullable',
+            'tags.' => 'nullable',
         ]);
         $article->fill($request->get('article'));
-        // $article->saveImageAsWebp();
         $article->save();
+        $article->categories()->sync(request('article.categories'));
+        // $article->comments()->sync(request('article.comments'));
+        $article->tags()->sync(request('article.tags'));
+
         Alert::info('You have successfully updated a article.');
 
         return redirect()->route('platform.articles.list');

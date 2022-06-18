@@ -2,7 +2,10 @@
 
 namespace App\Orchid\Screens\Category;
 
+use App\Models\Category;
+use App\Orchid\Layouts\Category\CategoryListLayout;
 use Orchid\Screen\Screen;
+use Orchid\Screen\Actions\Button;
 
 class CategoryListScreen extends Screen
 {
@@ -13,7 +16,9 @@ class CategoryListScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'categories' => Category::filters()->defaultSort('created_at')->paginate(10)
+        ];
     }
 
     /**
@@ -23,7 +28,7 @@ class CategoryListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'CategoryListScreen';
+        return 'All Categories';
     }
 
     /**
@@ -33,7 +38,11 @@ class CategoryListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Button::make('Add Category')
+                ->icon('plus')
+                ->method('addCategory'),
+        ];
     }
 
     /**
@@ -43,6 +52,12 @@ class CategoryListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            CategoryListLayout::class
+        ];
+    }
+    public function addCategory()
+    {
+        return redirect()->route('platform.categories.edit');
     }
 }

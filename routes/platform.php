@@ -2,8 +2,18 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\Achievement\AchievementEditScreen;
+use App\Orchid\Screens\Achievement\AchievementListScreen;
+use App\Orchid\Screens\Advertise\AdvertiseEditScreen;
+use App\Orchid\Screens\Advertise\AdvertiseListScreen;
 use App\Orchid\Screens\Article\ArticleEditScreen;
 use App\Orchid\Screens\Article\ArticleListScreen;
+use App\Orchid\Screens\Category\CategoryEditScreen;
+use App\Orchid\Screens\Category\CategoryListScreen;
+use App\Orchid\Screens\Comment\CommentEditScreen;
+use App\Orchid\Screens\Comment\CommentListScreen;
+use App\Orchid\Screens\Contact\ContactEditScreen;
+use App\Orchid\Screens\Contact\ContactListScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
 use App\Orchid\Screens\Examples\ExampleFieldsAdvancedScreen;
@@ -14,6 +24,8 @@ use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\Tag\TagEditScreen;
+use App\Orchid\Screens\Tag\TagListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -102,9 +114,45 @@ Route::screen('roles', RoleListScreen::class)
 // Platform > Article
 Route::screen('articles', ArticleListScreen::class)
     ->name('platform.articles.list');
-Route::screen('articles/edit/{article?}', ArticleEditScreen::class)
+Route::screen('articles/edit/{Article?}', ArticleEditScreen::class)
     ->name('platform.articles.edit');
 
+// Platform > Achievement
+Route::screen('achievements', AchievementListScreen::class)
+    ->name('platform.achievements.list');
+Route::screen('achievements/edit/{Achievement?}', AchievementEditScreen::class)
+    ->name('platform.achievements.edit');
+
+// Platform > Advertise
+Route::screen('advertises', AdvertiseListScreen::class)
+    ->name('platform.advertises.list');
+Route::screen('advertises/edit/{advertise?}', AdvertiseEditScreen::class)
+    ->name('platform.advertises.edit');
+
+
+// Platform > Comment
+Route::screen('comments', CommentListScreen::class)
+    ->name('platform.comments.list');
+Route::screen('comments/edit/{comment?}', CommentEditScreen::class)
+    ->name('platform.comments.edit');
+
+// Platform > contact
+Route::screen('contacts', ContactListScreen::class)
+    ->name('platform.contacts.list');
+Route::screen('contacts/edit/{contact?}', ContactEditScreen::class)
+    ->name('platform.contacts.edit');
+
+// Platform > category
+Route::screen('categories', CategoryListScreen::class)
+    ->name('platform.categories.list');
+Route::screen('categories/edit/{Category?}', CategoryEditScreen::class)
+    ->name('platform.categories.edit');
+
+// Platform > Tag
+Route::screen('tags', TagListScreen::class)
+    ->name('platform.tags.list');
+Route::screen('tags/edit/{Tag?}', TagEditScreen::class)
+    ->name('platform.tags.edit');
 
 
 

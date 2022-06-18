@@ -2,6 +2,9 @@
 
 namespace App\Orchid\Screens\Tag;
 
+use App\Models\Tag;
+use App\Orchid\Layouts\Tag\TagListLayout;
+use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 
 class TagListScreen extends Screen
@@ -13,7 +16,9 @@ class TagListScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'tags' => Tag::filters()->defaultSort('created_at')->paginate(10)
+        ];
     }
 
     /**
@@ -23,7 +28,7 @@ class TagListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'TagListScreen';
+        return 'All Tags';
     }
 
     /**
@@ -33,7 +38,11 @@ class TagListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Button::make('Add Tag')
+                ->icon('plus')
+                ->method('addTag'),
+        ];
     }
 
     /**
@@ -43,6 +52,12 @@ class TagListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            TagListLayout::class
+        ];
+    }
+    public function addTag()
+    {
+        return redirect()->route('platform.tags.edit');
     }
 }

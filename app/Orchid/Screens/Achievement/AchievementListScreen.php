@@ -2,7 +2,10 @@
 
 namespace App\Orchid\Screens\Achievement;
 
+use App\Models\Achievement;
+use App\Orchid\Layouts\Achievement\AchievementListLayout;
 use Orchid\Screen\Screen;
+use Orchid\Screen\Actions\Button;
 
 class AchievementListScreen extends Screen
 {
@@ -11,9 +14,11 @@ class AchievementListScreen extends Screen
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(): array
     {
-        return [];
+        return [
+            'achievements' => Achievement::filters()->defaultSort('created_at')->paginate(10)
+        ];
     }
 
     /**
@@ -23,7 +28,7 @@ class AchievementListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'AchievementListScreen';
+        return 'All Achievements';
     }
 
     /**
@@ -31,9 +36,13 @@ class AchievementListScreen extends Screen
      *
      * @return \Orchid\Screen\Action[]
      */
-    public function commandBar(): iterable
+    public function commandBar(): array
     {
-        return [];
+        return [
+            Button::make('Add Achievement')
+                ->icon('plus')
+                ->method('addAchievement')
+        ];
     }
 
     /**
@@ -43,6 +52,12 @@ class AchievementListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            AchievementListLayout::class,
+        ];
+    }
+    public function addAchievement()
+    {
+        return redirect()->route('platform.achievements.edit');
     }
 }

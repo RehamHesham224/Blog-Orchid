@@ -18,11 +18,14 @@ return new class extends Migration
 
             $table->string('title');
             $table->text('body');
-            $table->foreignId('comment_id')
-                ->constrained('comments')
+            $table->foreignId('user_id')
+                ->constrained('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
+            $table->foreignId('article_id')
+                ->constrained('articles')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -2,6 +2,9 @@
 
 namespace App\Orchid\Screens\Contact;
 
+use App\Models\Contact;
+use App\Orchid\Layouts\Contact\ContactListLayout;
+use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 
 class ContactListScreen extends Screen
@@ -13,7 +16,9 @@ class ContactListScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'contacts' => Contact::filters()->defaultSort('created_at')->paginate(10)
+        ];
     }
 
     /**
@@ -23,7 +28,7 @@ class ContactListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'ContactListScreen';
+        return 'All Contacts';
     }
 
     /**
@@ -33,7 +38,11 @@ class ContactListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Button::make('Add Contacts')
+                ->icon('plus')
+                ->method('addContact'),
+        ];
     }
 
     /**
@@ -43,6 +52,12 @@ class ContactListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            ContactListLayout::class
+        ];
+    }
+    public function addContact()
+    {
+        return redirect()->route('platform.contacts.edit');
     }
 }
