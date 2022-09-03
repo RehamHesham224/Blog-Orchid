@@ -9,7 +9,7 @@
 
 ## About Project
 
-> Blog website and API ,Using Laravel , (Orchid Admin Panel)[https://orchid.software/] .
+> Blog website and API ,Using Laravel , [Orchid Admin Panel](https://orchid.software/) .
 
 ## Content
 
