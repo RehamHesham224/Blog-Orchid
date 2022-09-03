@@ -27,5 +27,5 @@
 > (Blog Diagram)[https://drawsql.app/reham/diagrams/blog]
 
 -   that contain
-    -   Data in each schema
+    -   Fields in each schema
     -   Relation Between Tables
